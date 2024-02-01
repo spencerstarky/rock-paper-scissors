@@ -1,16 +1,41 @@
-function getComputerChoice() {
-  let compChoices = ["rock", "paper", "scissors"]
-  let x = Math.floor(Math.random() * 3);
+console.log('HI')
 
-  if (x === 0) {
-    return "rock"
+const options = ["rock", "paper", "scissors"];
+
+function getComputerChoice(){
+  const choice = options[Math.floor(Math.random() * options.length)];
+  console.log(choice)
+  return choice;
+}
+
+function checkWinner(playerSelection, computerSelection) {
+  if (playerSelection == computerSelection){
+  return "Tie"
   }
-  if (x === 1) {
-    return "paper"
-  }
-  if (x === 2) {
-    return "scissors"
+  else if(
+    (playerSelection == "rock" && computerSelection == "scissors") ||
+    (playerSelection == "paper" && computerSelection == "rock") ||
+    (playerSelection == "scissors" && computerSelection == "paper")
+  ){
+    return "Player";
+  }  
+  else {
+    return "Computer";
   }
 }
-  
-console.log(getComputerChoice());
+function playRound(playerSelection, computerSelection){
+  const result = checkWinner(playerSelection, computerSelection)
+  if(result == "Tie"){
+    return "It's a tie!"
+  }
+  else if(result == "Player"){
+    return "Congrats, you are the winner"
+  }
+  else{
+    return "You lost."
+  }
+}
+
+const playerSelection = "rock";
+ const computerSelection = getComputerChoice();
+ console.log(playRound(playerSelection, computerSelection));
