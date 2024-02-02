@@ -1,84 +1,48 @@
-const options = ["rock", "paper", "scissors"];
-
-function getComputerChoice(){
-  const choice = options[Math.floor(Math.random() * options.length)];
-  return choice;
-}
-
-function checkWinner(playerSelection, computerSelection) {
-  if (playerSelection == computerSelection){
-  return "Tie"
-  }
-  else if(
-    (playerSelection == "rock" && computerSelection == "scissors") ||
-    (playerSelection == "paper" && computerSelection == "rock") ||
-    (playerSelection == "scissors" && computerSelection == "paper")
-  ){
-    return "Player";
-  }  
-  else {
-    return "Computer";
-  }
-
-}
-
-function playRound(playerSelection, computerSelection){
-  const result = checkWinner(playerSelection, computerSelection);
-  if(result == "Tie"){
-    return "It's a tie!"
-  }
-  else if(result == "Player"){
-    return "You win"
-  }
-  else{
-    return "You lost."
+function playRound(playerSelection, computerSelection) {
+  if (playerSelection === computerSelection) {
+      return "It's a tie!";
+  } else if (
+      (playerSelection === "rock" && computerSelection === "scissors") ||
+      (playerSelection === "paper" && computerSelection === "rock") ||
+      (playerSelection === "scissors" && computerSelection === "paper")
+  ) {
+      return "You win!";
+  } else {
+      return "You lose!";
   }
 }
 
-function getPlayerChoice(){
-  let validatedInput = false;
-  while(validatedInput == false){
-    const choice = prompt("Rock Paper Scissors");
-    if(choice == null){
-      continue;
-    }
-    const choiceInLower = choice.toLowerCase();
-    if(options.includes(choiceInLower)){
-      validatedInput = true;
-      return choiceInLower;
-    }
+function computerPlay() {
+  const choices = ["rock", "paper", "scissors"];
+  const randomIndex = Math.floor(Math.random() * choices.length);
+  return choices[randomIndex];
+}
+
+function game() {
+  let playerScore = 0;
+  let computerScore = 0;
+
+  for (let i = 0; i < 5; i++) {
+      const playerSelection = prompt("Enter your choice: rock, paper, or scissors").toLowerCase();
+      const computerSelection = computerPlay();
+
+      const result = playRound(playerSelection, computerSelection);
+      console.log(result);
+
+      if (result === "You win!") {
+          playerScore++;
+      } else if (result === "You lose!") {
+          computerScore++;
+      }
+  }
+
+  if (playerScore > computerScore) {
+      console.log("Congratulations! You win the game!");
+  } else if (playerScore < computerScore) {
+      console.log("Sorry, you lose the game.");
+  } else {
+      console.log("It's a tie game!");
   }
 }
 
-function game(){
-  let scorePlayer = 0;
-  let scoreComputer = 0;
-  console.log("Welcome!")
-  for (let i = 0; i < 5; i ++) {
-   const playerSelection = getPlayerChoice();
-   const computerSelection = getComputerChoice();
-   console.log(playRound(playerSelection,computerSelection));
-   console.log("---------")
-   if(checkWinner(playerSelection,computerSelection) == "Player"){
-    scorePlayer ++;
-   }
-   else if (checkWinner(playerSelection,computerSelection) == "Computer"){
-scoreComputer ++;
-   }
-  }
-  console.log("Game Over")
-  if(scorePlayer > scoreComputer){
-    console.log("Player was the winner")
-  }
-  else if(scorePlayer < scoreComputer){
-    console.log("Computer was the winner");
-  }
-  else{
-    console.log("We have a tie")
-  }
-}
-
-game()
-
-// Conditions aren't matching up as they should.//
-// checkWinner conditions appear to be correct, but the winner, loser, tie isn't popping up when it should.//
+game();
